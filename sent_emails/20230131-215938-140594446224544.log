@@ -1,0 +1,26 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on ec2-34-231-136-27.compute-1.amazonaws.com:8080
+From: webmaster@localhost
+To: 0@hugohu.top
+Date: Wed, 01 Feb 2023 02:59:38 -0000
+Message-ID: 
+ <167522037823.37743.10476402114898588110@ip-172-31-30-41.ec2.internal>
+
+
+You're receiving this email because you requested a password reset for your user account at ec2-34-231-136-27.compute-1.amazonaws.com:8080.
+
+Please go to the following page and choose a new password:
+
+http://ec2-34-231-136-27.compute-1.amazonaws.com:8080/accounts/reset/MQ/biwvre-d64c2430b3ad082aee7677fc445d5ed8/
+
+Your username, in case you’ve forgotten: hugo
+
+Thanks for using our site!
+
+The ec2-34-231-136-27.compute-1.amazonaws.com:8080 team
+
+
+
+-------------------------------------------------------------------------------
