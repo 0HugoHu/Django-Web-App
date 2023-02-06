@@ -1,0 +1,33 @@
+.parent {
+    width: 100%;
+}
+
+.child {
+    float: left;
+    width: 45%;
+}
+
+span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width:38px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.container {
+    max-width: 550px;
+    min-height: 100vh;
+    margin-top: 0 !important;
+    padding-top: 15vh;
+}
+
+.card-body {
+    max-width: 500px;
+}

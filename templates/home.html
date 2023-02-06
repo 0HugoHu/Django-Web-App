@@ -1,15 +1,151 @@
-<!-- templates/home.html-->
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
-{% block title %}Home{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/home.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
-{% block content %}
-{% if user.is_authenticated %}
-    Hi {{ user.username }}!
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
-{% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-{% endif %}
+{% block body %}
+{% include "navbar.html" %}
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="form-group input-group col-sm-10 left">
+            <div class="input-group-prepend search-bar">
+                <span class="input-group-text"> <i class="fa fa-search"></i> </span>
+            </div>
+            <input name="" class="form-control search" placeholder="Enter your pickup location" type="text">
+        </div>
+
+        <div class="form-group input-group col-sm-10 right">
+            <div class="input-group-prepend search-bar">
+                <span class="input-group-text"> <i class="fa fa-search"></i> </span>
+            </div>
+            <input name="" class="form-control search" placeholder="Enter your destination" type="text">
+        </div>
+
+        <div class="form-group col-sm-2">
+            <button type="submit" class="btn btn-info search-btn" id="search_submit"> Search</button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 70px; margin-left: 15px; margin-right: 16px">
+        <div class="card bg-light time">
+            <i class="fa fa-clock-o" style="margin-top: 20px; margin-left: 16px;"></i>
+            <div class="leave-time" style="margin-left: 41px; margin-top: 15px;">Leave</div>
+            <div class="leave-time" style="margin-left: 86px; margin-top: 15px; font-weight: bold; font-style: italic">
+                Now
+            </div>
+            <div class="leave-time" style="margin-left: 126px; margin-top: 15px;"> or make an appointment:</div>
+            <select class='form-control leave-time' style="margin-top: 8px;width: 120px; left: 350px;  " id="leaving_time">
+                <option value="0">Now</option>
+                <option value="10">In 10 mins</option>
+                <option value="15">In 15 mins</option>
+                <option value="30">In 30 mins</option>
+                <option value="45">In 45 mins</option>
+                <option value="60">In 1 hr</option>
+            </select>
+            <h4 class="leave-time" style="margin-top: 50px; left:16px; width:auto;">
+                <input class="is_shared" type="checkbox" id="is_shared" onclick="joinSharedRide()" value="DRIVER">
+                <label for="is_shared" style="margin-left: 8px;"> Join Shared Ride</label><br>
+            </h4>
+            <h6 class="leave-time" style="margin-top: 76px; left: 40px;">* By requesting a shared ride, you acknowledge the Hugo Ride© Shared-ride User Term.</h6>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 150px; margin-left: 15px">
+        <div class="card bg-light left">
+            <div style="height: 100%; width: 100%; position: relative">
+                <img class="car-type" src="/static/pics/car_basic.png"/>
+                <h3>Economy</h3>
+                <i class="fa fa-user"></i>
+                <h5>4</h5>
+                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h4>Best choice for everyday rides! </h4>
+                <h2>$33.27</h2>
+                <button type="submit" class="btn btn-dark go-btn" id="choice_1"> Go!</button>
+            </div>
+        </div>
+
+        <div class="card bg-light right" style="right: 10%;left: auto;margin-right: 15px">
+            <div style="height: 100%; width: 100%; position: relative">
+                <img class="car-type" src="/static/pics/car_comfort.png"/>
+                <h3>Hugo Comfort©</h3>
+                <i style="margin-left:320px;" class="fa fa-user"></i>
+                <h5 style="margin-left: 338px;">4</h5>
+                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h4>Almost new car with clean and comfort environment! </h4>
+                <h2>$41.05</h2>
+                <button type="submit" class="btn btn-dark go-btn" id="choice_2"> Go!</button>
+            </div>
+        </div>
+        <div class="form-group col-sm-2">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 180px; margin-left: 15px">
+        <div class="card bg-light left">
+            <div style="height: 100%; width: 100%; position: relative">
+                <img class="car-type" src="/static/pics/car_xl.png"/>
+                <h3>Hugo Large©</h3>
+                <i style="margin-left:300px;" class="fa fa-user"></i>
+                <h5 style="margin-left:318px;">6</h5>
+                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h4>Best if you have large baggage! </h4>
+                <h2>$43.99</h2>
+                <button type="submit" class="btn btn-dark go-btn" id="choice_3"> Go!</button>
+            </div>
+        </div>
+
+        <div class="card bg-light right" style="right: 10%;left: auto;margin-right: 15px">
+            <div style="height: 100%; width: 100%; position: relative">
+                <img class="car-type" src="/static/pics/car_pet.png"/>
+                <h3>Pet Care</h3>
+                <i class="fa fa-user"></i>
+                <h5>2-3</h5>
+                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h4>Affordable ride for you and pets! </h4>
+                <h2>$52.32</h2>
+                <button type="submit" class="btn btn-dark go-btn" id="choice_4"> Go!</button>
+            </div>
+        </div>
+        <div class="form-group col-sm-2">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 180px; margin-left: 15px">
+        <div class="card bg-light left">
+            <div style="height: 100%; width: 100%; position: relative">
+                <img class="car-type" src="/static/pics/car_green.png"/>
+                <h3>Hugo Green©</h3>
+                <i style="margin-left:300px;" class="fa fa-user"></i>
+                <h5 style="margin-left:318px;">4</h5>
+                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h4>Save out planet by choosing electric vehicles! </h4>
+                <h2>$35.05</h2>
+                <button type="submit" class="btn btn-dark go-btn" id="choice_5"> Go!</button>
+            </div>
+        </div>
+
+        <div class="card bg-light right" style="right: 10%;left: auto;margin-right: 15px">
+            <div style="height: 100%; width: 100%; position: relative">
+                <img class="car-type" src="/static/pics/car_access.png"/>
+                <h3>Special Needs</h3>
+                <i style="margin-left:300px;" class="fa fa-user"></i>
+                <h5 style="margin-left:318px;">2-8</h5>
+                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h4>Tell us what else you want! Price may vary based on your needs. </h4>
+                <h2>$60.58</h2>
+                <button type="submit" class="btn btn-dark go-btn" id="choice_6"> Go!</button>
+            </div>
+        </div>
+        <div class="form-group col-sm-2">
+        </div>
+    </div>
+</div>
+<div class="container search_results">
+</div>
+
 {% endblock %}

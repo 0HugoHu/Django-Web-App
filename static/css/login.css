@@ -1,0 +1,41 @@
+
+
+.container {
+    max-width: 550px;
+    min-height: 100vh;
+    margin-top: 0 !important;
+    padding-top: 25vh;
+}
+
+.card-body {
+    max-width: 500px;
+}
+
+span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width:38px;
+}
+
+.parent {
+    width: 100%;
+}
+
+.text {
+    font-size: medium;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width:38px;
+}

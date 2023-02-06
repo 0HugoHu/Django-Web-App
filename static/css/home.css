@@ -1,0 +1,138 @@
+.mt-5 {
+    min-height: 45vh;
+    margin-top: 0 !important;
+    padding-top: 15vh;
+    width: 100%;
+}
+
+.search {
+    height: 45px;
+}
+
+.search-btn {
+    min-height: 45px;
+    min-width: 90px;
+}
+
+
+.row {
+    margin: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    position: relative;
+}
+
+.col-sm-10 {
+    position: absolute;
+    left: 0;
+    flex: 0 0 45%;
+    max-width: 45%;
+}
+
+.col-sm-2 {
+    position: absolute;
+    flex: 0 0 10%;
+    max-width: 10%;
+    right: 0;
+}
+
+.right {
+    right: 10%;
+    left: auto;
+}
+
+.card {
+    height: 130px;
+    position: absolute;
+    left: 0;
+    flex: 0 0 45%;
+    max-width: 43%;
+    width: 43%;
+}
+
+.car-type {
+    height: 120px;
+    width: 120px;
+}
+
+h3 {
+    margin-left: 126px;
+    position: absolute;
+    left: 0;
+    top: 16px;
+    font-size: x-large;
+}
+
+h5 {
+    margin-left: 268px;
+    position: absolute;
+    left: 0;
+    top: 22px;
+    font-size: medium;
+    font-weight: normal;
+    color: black;
+}
+
+h6 {
+    margin-left: 126px;
+    position: absolute;
+    left: 0;
+    top: 50px;
+    font-size: small;
+    font-weight: normal;
+    color: dimgrey;
+}
+
+h4 {
+    margin-left: 126px;
+    position: absolute;
+    max-width: 250px;
+    left: 0;
+    top: 72px;
+    font-size: medium;
+    font-weight: normal;
+    color: black;
+}
+
+h2 {
+    margin-left: 126px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-size: x-large;
+}
+
+.go-btn {
+    margin-left: 126px;
+    position: absolute;
+    right: 16px;
+    top: 54px;
+    font-size: large;
+    width: 72px;
+
+}
+
+.fa-user {
+    height: 32px;
+    width: 32px;
+    margin-left: 250px;
+    position: absolute;
+    left: 0;
+    top: 24px;
+}
+
+.time {
+    height: 120px;
+    flex: 0 0 90%;
+    max-width: 90%;
+    width: 90%;
+}
+
+.leave-time {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 0;
+}
+

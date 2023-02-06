@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/signup.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card bg-light">
+        <article class="card-body mx-auto">
+
+            <div class='parent' style="margin-top:20px;">
+                <img src="static/pics/logo.png" style="max-width:200px;"/>
+            </div>
+
+            <h4 class="card-title mt-3 text-center" style="margin-top:30px !important;">Signup</h4>
+
+            <div class='parent' style="margin-top:30px;">
+                <div class='child'>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input class="form-control first_name" placeholder="Legal First Name" type="text">
+                    </div>
+                </div>
+                <div class='child' style="margin-left: 10%;">
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input class="form-control last_name" placeholder="Legal Last Name" type="text">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='parent'>
+                <div class='child'>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user-circle-o"
+                                                               aria-hidden="true"></i> </span>
+                        </div>
+                        <input class="form-control username" placeholder="Username (Public)"
+                               type="text">
+                    </div>
+                </div>
+
+                <div class='child' style="margin-left: 10%;">
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-female"></i> </span>
+                        </div>
+                        <select class='form-control gender' id="gender">
+                            <option value="FEMALE">Female</option>
+                            <option value="MALE">Male</option>
+                            <option value="OTHERS">Others</option>
+                            <option value="UNKNOWN">Hope not to say</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-unlock-alt"></i> </span>
+                </div>
+                <input class="form-control password" placeholder="Password" type="password">
+            </div>
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-unlock-alt"></i> </span>
+                </div>
+                <input class="form-control confirm_password" placeholder="Confirm Password" type="password">
+            </div>
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input class="form-control email" placeholder="Email address" type="email">
+            </div>
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                <input class="form-control phone_number" placeholder="Phone number" type="text">
+            </div>
+
+            <h6 class="card-title mt-3 text-center">
+                <input class="is_driver" type="checkbox" id="user_type" onclick="isDriver()" value="DRIVER">
+                <label for="user_type"> Also register as Drivers</label><br>
+            </h6>
+
+            <div class="form-group input-group" style="display:none" id="id_field">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-id-card"></i> </span>
+                </div>
+                <input class="form-control driver_license" placeholder="Driver License ID" type="text">
+            </div>
+
+            <div class="form-group input-group" style="display:none" id="car_field">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-car"></i> </span>
+                </div>
+                <input class="form-control plate_number" placeholder="Vehicle Plate Number" type="text">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-success btn-block" id="signup_submit"> Create Account
+                </button>
+            </div>
+
+            <p class="text-center">Have an account? <a href="/login" style="color: #2db04f;">Log In</a></p>
+        </article>
+    </div>
+</div>
+
+<script>
+    function isDriver() {
+        var checkBox = document.getElementById("user_type");
+        var widget1 = document.getElementById("id_field");
+        var widget2 = document.getElementById("car_field");
+        if (checkBox.checked == true) {
+            widget1.style.display = "";
+            widget2.style.display = "";
+        } else {
+            widget1.style.display = "none";
+            widget2.style.display = "none";
+        }
+    }
+
+
+</script>
+{% endblock %}

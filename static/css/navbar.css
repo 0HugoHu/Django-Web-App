@@ -1,0 +1,20 @@
+nav {
+    width: 100% !important;
+    height: 80px;
+!important;
+}
+
+.parent {
+    width: 100%;
+    position: relative;
+}
+
+.child {
+    position: absolute;
+    bottom:0;
+    top:0;
+}
+
+.btn {
+    max-height: 40px;
+}

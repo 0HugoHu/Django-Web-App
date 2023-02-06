@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-!5@dg)@a=)5ptl%x*u5$6xj3m05smi^%1n_7&4^@orf9e*47do
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-34-231-136-27.compute-1.amazonaws.com', '127.0.0.1']
-
+ALLOWED_HOSTS = ['ec2-34-231-136-27.compute-1.amazonaws.com', '127.0.0.1', 'localhost', '*',]
 
 # Application definition
 
@@ -37,7 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
+    'livereload',
+    'haystack',
+    'world',
+    'phonenumber_field',
+    # 'accounts',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +51,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
 
 ROOT_URLCONF = 'ridesharing.urls'
 
@@ -70,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ridesharing.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -78,13 +88,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'user_info',
-        'USER': 'ubuntu',
-        'PASSWORD': 'pwdubuntu',
+        'USER': 'postgres',
+        'PASSWORD': 'pwdpostgres',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -104,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -116,11 +124,24 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/pics')
+
+# Custom user model
+AUTH_USER_MODEL = 'world.User'
+
+# login URL
+LOGIN_URL = 'signup'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -136,10 +157,12 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 SENDGRID_API_KEY = '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'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_USER = 'apikey'  # this is exactly the value 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # The email you'll be sending emails from
 DEFAULT_FROM_EMAIL = 'jobs@hugohu.top'
+
+LIVERELOAD_HOST = 'localhost'

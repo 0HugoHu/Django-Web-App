@@ -1,0 +1,27 @@
+{% block scripts %}
+<link rel="stylesheet" href="static/css/navbar.css">
+{% endblock %}
+
+<div>
+    <nav class="navbar navbar-light bg-light">
+        <div class='parent'>
+            <img class='child' src="static/pics/logo.png" onclick="location.href='/'" style="max-width:150px;left:0;right:0;margin:auto;"/>
+            <div class="child" style="left:16px; margin-top: -16px;">
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">Home
+                </button>
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">My Rides
+                </button>
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">My Orders
+                </button>
+            </div>
+            <div class='child' style="right:16px; margin-top:-16px;">
+                <a style="margin-right: 16px;">Logged in as: {{ user.get_username }} </a>
+                <button class="btn btn-outline-dark my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/profile'">Profile
+                </button>
+                <button class="btn btn-outline-dark my-2 my-sm-0" onclick="location.href='/logout'">Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+</div>
+
