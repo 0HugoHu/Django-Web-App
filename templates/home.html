@@ -11,15 +11,15 @@
 {% include "navbar.html" %}
 <div class="container mt-5">
 
-    <div class="row">
-        <div class="form-group input-group col-sm-10 left">
+    <div class="row main">
+        <div class="form-group input-group col-sm-10 left-child">
             <div class="input-group-prepend search-bar">
                 <span class="input-group-text"> <i class="fa fa-search"></i> </span>
             </div>
             <input name="" class="form-control search" placeholder="Enter your pickup location" type="text">
         </div>
 
-        <div class="form-group input-group col-sm-10 right">
+        <div class="form-group input-group col-sm-10 right-child">
             <div class="input-group-prepend search-bar">
                 <span class="input-group-text"> <i class="fa fa-search"></i> </span>
             </div>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group col-sm-2">
-            <button type="submit" class="btn btn-info search-btn" id="search_submit"> Search</button>
+            <button type="submit" class="btn btn-info search-btn" id="search_submit" onclick="search_submit()"> Search</button>
         </div>
     </div>
 
@@ -51,12 +51,12 @@
                 <input class="is_shared" type="checkbox" id="is_shared" onclick="joinSharedRide()" value="DRIVER">
                 <label for="is_shared" style="margin-left: 8px;"> Join Shared Ride</label><br>
             </h4>
-            <h6 class="leave-time" style="margin-top: 76px; left: 40px;">* By requesting a shared ride, you acknowledge the Hugo Ride© Shared-ride User Term.</h6>
+            <h2 class="leave-time collapse-prompt" style="margin-top: 100px;left: 16px;">Pick Up Your Ride:</h2>
         </div>
     </div>
 
-    <div class="row" style="margin-top: 150px; margin-left: 15px">
-        <div class="card bg-light left">
+    <div class="row collapse-ele" style="margin-top: 150px; margin-left: 15px; left:16px;">
+        <div class="card card-special bg-light left-child">
             <div style="height: 100%; width: 100%; position: relative">
                 <img class="car-type" src="/static/pics/car_basic.png"/>
                 <h3>Economy</h3>
@@ -69,8 +69,8 @@
             </div>
         </div>
 
-        <div class="card bg-light right" style="right: 10%;left: auto;margin-right: 15px">
-            <div style="height: 100%; width: 100%; position: relative">
+        <div class="card card-special bg-light right-child" style="right: 14%;left: auto;">
+            <div style="height: 100%; width: 100%; position: relative; right:0;">
                 <img class="car-type" src="/static/pics/car_comfort.png"/>
                 <h3>Hugo Comfort©</h3>
                 <i style="margin-left:320px;" class="fa fa-user"></i>
@@ -85,8 +85,8 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top: 180px; margin-left: 15px">
-        <div class="card bg-light left">
+    <div class="row collapse-ele" style="margin-top: 150px; margin-left: 15px; left:16px;">
+        <div class="card card-special bg-light left-child">
             <div style="height: 100%; width: 100%; position: relative">
                 <img class="car-type" src="/static/pics/car_xl.png"/>
                 <h3>Hugo Large©</h3>
@@ -99,8 +99,8 @@
             </div>
         </div>
 
-        <div class="card bg-light right" style="right: 10%;left: auto;margin-right: 15px">
-            <div style="height: 100%; width: 100%; position: relative">
+        <div class="card card-special bg-light right-child" style="right: 14%;left: auto;">
+            <div style="height: 100%; width: 100%; position: relative; right:0;">
                 <img class="car-type" src="/static/pics/car_pet.png"/>
                 <h3>Pet Care</h3>
                 <i class="fa fa-user"></i>
@@ -115,9 +115,9 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top: 180px; margin-left: 15px">
-        <div class="card bg-light left">
-            <div style="height: 100%; width: 100%; position: relative">
+    <div class="row collapse-ele" style="margin-top: 150px; margin-left: 15px; left:16px;">
+        <div class="card card-special bg-light left-child">
+            <div style="height: 100%; width: 100%; position: relative;">
                 <img class="car-type" src="/static/pics/car_green.png"/>
                 <h3>Hugo Green©</h3>
                 <i style="margin-left:300px;" class="fa fa-user"></i>
@@ -129,8 +129,8 @@
             </div>
         </div>
 
-        <div class="card bg-light right" style="right: 10%;left: auto;margin-right: 15px">
-            <div style="height: 100%; width: 100%; position: relative">
+        <div class="card card-special bg-light right-child" style="right: 14%;left: auto;">
+            <div style="height: 100%; width: 100%; position: relative; right:0;">
                 <img class="car-type" src="/static/pics/car_access.png"/>
                 <h3>Special Needs</h3>
                 <i style="margin-left:300px;" class="fa fa-user"></i>
@@ -147,5 +147,19 @@
 </div>
 <div class="container search_results">
 </div>
+
+<script>
+    function search_submit() {
+        const collection = document.getElementsByClassName("collapse-ele");
+        for (let i = 0; i < 3; i++) {
+            collection[i].style.display = "flex";
+        }
+        document.getElementsByClassName("collapse-prompt")[0].style.display = "inline";
+        document.getElementsByClassName("main")[0].style.marginTop = "0";
+        document.getElementsByClassName("time")[0].style.minHeight = "650px";
+    }
+
+
+</script>
 
 {% endblock %}

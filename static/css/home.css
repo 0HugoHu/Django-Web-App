@@ -37,7 +37,7 @@
     right: 0;
 }
 
-.right {
+.right-child {
     right: 10%;
     left: auto;
 }
@@ -46,9 +46,59 @@
     height: 130px;
     position: absolute;
     left: 0;
-    flex: 0 0 45%;
-    max-width: 43%;
-    width: 43%;
+    flex: 0 0 42%;
+    max-width: 42%;
+    width: 42%;
+}
+
+.card-special {
+    height: 130px;
+    position: absolute;
+    left: 0;
+    flex: 0 0 42%;
+    max-width: 42%;
+    width: 42%;
+    --border-size: 3px;
+    --border-angle: 0turn;
+
+    background-image: conic-gradient(
+            from var(--border-angle),
+            #fff,
+            #eee 50%,
+            #fff
+    ),
+    conic-gradient(from var(--border-angle), transparent 20%, #17a2b8, #343A40);
+    background-size: calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
+    cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    animation: bg-spin 3s linear infinite;
+
+}
+
+@keyframes bg-spin {
+    to {
+        --border-angle: 1turn;
+    }
+}
+
+.card-special:hover {
+    animation-play-state: running;
+    --border-size: 3px;
+    background-image: conic-gradient(
+            from var(--border-angle),
+            #fff,
+            #eee 50%,
+            #fff
+    ),
+    conic-gradient(from var(--border-angle), transparent 20%, #17a2b8, #343A40);
+}
+
+.card-special:not(:hover) {
+    animation-play-state: paused;
+    --border-size: 0px;
+    background-image: none;
 }
 
 .car-type {
@@ -123,7 +173,7 @@ h2 {
 }
 
 .time {
-    height: 120px;
+    height: 90px;
     flex: 0 0 90%;
     max-width: 90%;
     width: 90%;
@@ -136,3 +186,20 @@ h2 {
     margin-left: 0;
 }
 
+.collapse-ele {
+    display: none;
+}
+
+.collapse-prompt {
+    display: none;
+}
+
+.main {
+    margin-top: 120px;
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0turn;
+}
