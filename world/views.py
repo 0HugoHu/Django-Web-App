@@ -1,6 +1,5 @@
 import json
 
-from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
@@ -8,12 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
-from django.shortcuts import get_object_or_404
-
-from haystack.query import SearchQuerySet
-
+from datetime import datetime, timedelta
+from django.db.models import Q
 from .util import otp_generator, send_otp_email, validate_otp, validate_password
-from .models import User, City, Country, Countrylanguage
+from .models import User, Trip, Vehicle
 
 
 @login_required
@@ -22,27 +19,62 @@ def home(request):
 
 
 @login_required
+@csrf_exempt
 def search(request):
-    query = request.GET.get("query", "").strip()
-    result = {"cities": [], "countries": [], "languages": []}
+    peer = ""
+    if request.GET["joinShared"] == "true":
+        peer = "available"
 
-    if not query and len(query) < 3:
-        return JsonResponse(result)
+    current_time = datetime.now()
+    pickup_hour = int(request.GET["estimatePickUpTime"].split(':')[0])
+    pickup_min = int(request.GET["estimatePickUpTime"].split(':')[1])
+    updated_time = current_time + timedelta(minutes=(60*pickup_hour+pickup_min - 60*current_time.hour-current_time.minute))
 
-    city_pks = list(SearchQuerySet().autocomplete(i_city_name=query).values_list("pk", flat=True))
-    country_pks = list(SearchQuerySet().autocomplete(i_country_name=query).values_list("pk", flat=True))
-    language_pks = list(SearchQuerySet().autocomplete(i_language_name=query).values_list("pk", flat=True))
-
-    result["cities"] = [City.objects.filter(pk=city_pk).values().first() for city_pk in city_pks]
-    result["countries"] = [Country.objects.filter(pk=country_pk).values().first() for country_pk in country_pks]
-    result["languages"] = [Countrylanguage.objects.filter(pk=language_pk).values().first() for language_pk in
-                           language_pks]
-
-    return render(request, "search_results.html", result)
+    trip_model = Trip(
+        begin=request.GET["departure"],
+        destination=request.GET["destination"],
+        passenger=request.GET["email"],
+        vehicle_type=request.GET["choice"],
+        estimate_pickup_time=updated_time,
+        estimate_fee=request.GET["estimateFee"],
+        peer=peer,
+    )
+    trip_model.save(force_insert=True)
+    result = {"success": True, "message": "Trip Requested!"}
+    return JsonResponse(result)
 
 
 def signup(request):
     return render(request, "signup.html")
+
+@login_required
+@csrf_exempt
+def my_ride(request):
+    result = {"ongoing": [], "completed": [], "cancelled": []}
+
+    result["ongoing"] = Trip.objects.filter(Q(status='Request') | Q(status='Order Taking') | Q(status='In Progress'))
+    result["completed"] = Trip.objects.filter(status='Completed')
+    result["cancelled"] = Trip.objects.filter(status='Cancelled')
+
+    return render(request, "my_ride.html", result)
+
+
+@login_required
+@csrf_exempt
+def find_ride(request):
+    return render(request, "my_ride.html")
+
+
+@login_required
+@csrf_exempt
+def support(request):
+    return render(request, "my_ride.html")
+
+
+@login_required
+@csrf_exempt
+def about(request):
+    return render(request, "my_ride.html")
 
 
 @csrf_exempt
@@ -115,6 +147,10 @@ def signup_validate(request):
     except IntegrityError:
         result = {"success": False, "message": "User already exists! Try with a different email!"}
         return JsonResponse(result)
+
+    if user_group == "DRIVER":
+        vehicle_model = Vehicle(plate_number=plate_number)
+        vehicle_model.save(force_insert=True)
 
     otp = otp_generator()
     otp_status = send_otp_email(email, otp)
@@ -200,7 +236,7 @@ def c_profile(request):
 
 @login_required
 def get_country_details(request, country_name):
-    country = Country.objects.get(name=country_name)
+    country = Trip.objects.get(name=country_name)
     result = {"country": country}
 
     return render(request, "country.html", result)

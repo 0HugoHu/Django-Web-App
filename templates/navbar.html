@@ -9,20 +9,20 @@
             <div class="child" style="left:16px; margin-top: -16px;">
                 <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">Home
                 </button>
-                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">My Rides
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/my_ride'">My Rides
                 </button>
-                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">My Orders
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/find_ride'">Find Rides
                 </button>
-                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">Support
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/support'">Support
                 </button>
-                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">About
+                <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/about'">About
                 </button>
             </div>
             <div class='child' style="right:16px; margin-top:-16px;">
                 <a style="margin-right: 16px;">Logged in as: {{ user.get_username }} </a>
                 <button class="btn btn-outline-dark my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/profile'">Profile
                 </button>
-                <button class="btn btn-outline-dark my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/vehicle'">Vehicle
+                <button {% if user.user_group != 'PASSENGER' %} style="display: none;" {% endif %} class="btn btn-outline-dark my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/vehicle'">Vehicle
                 </button>
                 <button class="btn btn-outline-dark my-2 my-sm-0" onclick="location.href='/logout'">Logout
                 </button>

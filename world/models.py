@@ -10,61 +10,68 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AbstractBaseUser, BaseUserManager, UserManager
-
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+class Trip(models.Model):
+    id = models.AutoField(primary_key=True)
+    begin = models.CharField(max_length=100)
+    destination = models.CharField(max_length=100)
+    passenger = models.CharField(max_length=100)
+    request_time = models.DateTimeField(auto_now=True)
+
+    VEHICLE = (
+        ('Economy', '0'),
+        ('Comfort', '1'),
+        ('Large', '2'),
+        ('Pet', '3'),
+        ('Green', '4'),
+        ('Special', '5'),
+    )
+    vehicle_type = models.CharField(max_length=20, choices=VEHICLE, default="Economy")
+    estimate_pickup_time = models.DateTimeField()
+    estimate_fee = models.CharField(max_length=100)
+
+    driver = models.CharField(max_length=100, blank=True, null=True)
+    order_taking_time = models.DateTimeField(blank=True, null=True)
+    pickup_time = models.DateTimeField(blank=True, null=True)
+    arrive_time = models.DateTimeField(blank=True, null=True)
+    actual_fee = models.CharField(max_length=100, blank=True, null=True)
+
+    STATUS = (
+        ('Request', 'REQUEST'),
+        ('Cancelled', 'CANCELLED'),
+        ('Order Taking', 'TAKING'),
+        ('In Progress', 'PROGRESS'),
+        ('Completed', 'COMPLETED'),
+    )
+    status = models.CharField(max_length=20, choices=STATUS, default="Request")
+
+    peer = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.id
 
 
-class City(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=35)  # Field name made lowercase.
-    countrycode = models.ForeignKey('Country', models.DO_NOTHING, db_column='CountryCode')  # Field name made lowercase.
-    district = models.CharField(db_column='District', max_length=20)  # Field name made lowercase.
-    population = models.IntegerField(db_column='Population')  # Field name made lowercase.
+class Vehicle(models.Model):
+    plate_number = models.CharField(max_length=10, primary_key=True)
+    VEHICLE = (
+        ('Economy', '0'),
+        ('Comfort', '1'),
+        ('Large', '2'),
+        ('Pet', '3'),
+        ('Green', '4'),
+        ('Special', '5'),
+    )
+    vehicle_type = models.CharField(max_length=20, choices=VEHICLE, default="Economy")
+    capacity = models.IntegerField(default=3, blank=True, null=True)
+    brand = models.CharField(max_length=100, blank=True, null=True)
+    model = models.CharField(max_length=100, blank=True, null=True)
+    year = models.CharField(max_length=100, blank=True, null=True)
+    color = models.CharField(max_length=100, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'city'
-
-
-class Country(models.Model):
-    code = models.CharField(db_column='Code', primary_key=True, max_length=3)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=52)  # Field name made lowercase.
-    continent = models.CharField(db_column='Continent', max_length=13)  # Field name made lowercase.
-    region = models.CharField(db_column='Region', max_length=26)  # Field name made lowercase.
-    surfacearea = models.FloatField(db_column='SurfaceArea')  # Field name made lowercase.
-    indepyear = models.SmallIntegerField(db_column='IndepYear', blank=True, null=True)  # Field name made lowercase.
-    population = models.IntegerField(db_column='Population')  # Field name made lowercase.
-    lifeexpectancy = models.FloatField(db_column='LifeExpectancy', blank=True, null=True)  # Field name made lowercase.
-    gnp = models.FloatField(db_column='GNP', blank=True, null=True)  # Field name made lowercase.
-    gnpold = models.FloatField(db_column='GNPOld', blank=True, null=True)  # Field name made lowercase.
-    localname = models.CharField(db_column='LocalName', max_length=45)  # Field name made lowercase.
-    governmentform = models.CharField(db_column='GovernmentForm', max_length=45)  # Field name made lowercase.
-    headofstate = models.CharField(db_column='HeadOfState', max_length=60, blank=True,
-                                   null=True)  # Field name made lowercase.
-    capital = models.IntegerField(db_column='Capital', blank=True, null=True)  # Field name made lowercase.
-    code2 = models.CharField(db_column='Code2', max_length=2)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'country'
-
-
-class Countrylanguage(models.Model):
-    countrycode = models.ForeignKey(Country, models.DO_NOTHING, db_column='CountryCode',
-                                    primary_key=True)  # Field name made lowercase.
-    language = models.CharField(db_column='Language', max_length=30)  # Field name made lowercase.
-    isofficial = models.CharField(db_column='IsOfficial', max_length=1)  # Field name made lowercase.
-    percentage = models.FloatField(db_column='Percentage')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'countrylanguage'
-        unique_together = (('countrycode', 'language'),)
-
-    def __unicode__(self):
-        return ("country-code: %s language: %s") % (self.countrycode.name, self.language)
+    def __str__(self):
+        return self.plate_number
 
 
 class DjangoMigrations(models.Model):
@@ -102,27 +109,6 @@ class MyCustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-
-    # def update_user(self, request):
-    #     body = json.loads(request.body)
-    #
-    #     try:
-    #         user = User.objects.get(email=body.get("email", ""))
-    #     except ObjectDoesNotExist:
-    #         result = {"success": False, "message": "Unknown error happens! Please try again!"}
-    #         return JsonResponse(result)
-    #
-    #     user.update(password = body.get("password", ""))
-    #     user.update(username = body.get("username", ""))
-    #     user.update(phone_number = body.get("phone_number", ""))
-    #     user.update(gender = body.get("gender", "FEMALE"))
-    #     user.update(driver_license = body.get("driver_license", ""))
-    #     user.update(plate_number = body.get("plate_number", ""))
-    #
-    #     if body.get("is_driver", False):
-    #         user.update(user_group = "DRIVER")
-    #
-    #     return user
 
     def create_superuser(self, email, password, username, user_group):
         user = self.model(
@@ -166,3 +152,5 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["password", "username", "user_group"]
+
+

@@ -11,6 +11,10 @@ urlpatterns = [
     re_path(r'^search$', views.search, name="search"),
     re_path(r'country/(?P<country_name>[\w|\W]+)$', views.get_country_details, name="country_page"),
     re_path(r'^logout$', views.c_logout, name="logout"),
+    re_path(r'^my_ride', views.my_ride, name="my_ride"),
+    re_path(r'^find_ride', views.find_ride, name="find_ride"),
+    re_path(r'^support', views.support, name="support"),
+    re_path(r'^about', views.about, name="about"),
     re_path(r'^profile$', views.c_profile, name="profile"),
     re_path(r"^profile/validate$", views.profile_validate, name="profile_validate"),
 ]

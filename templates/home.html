@@ -16,14 +16,14 @@
             <div class="input-group-prepend search-bar">
                 <span class="input-group-text"> <i class="fa fa-search"></i> </span>
             </div>
-            <input name="" class="form-control search" placeholder="Enter your pickup location" type="text">
+            <input name="" class="form-control search departure" placeholder="Enter your pickup location" type="text">
         </div>
 
         <div class="form-group input-group col-sm-10 right-child">
             <div class="input-group-prepend search-bar">
                 <span class="input-group-text"> <i class="fa fa-search"></i> </span>
             </div>
-            <input name="" class="form-control search" placeholder="Enter your destination" type="text">
+            <input name="" class="form-control search destination" placeholder="Enter your destination" type="text">
         </div>
 
         <div class="form-group col-sm-2">
@@ -39,7 +39,7 @@
                 Now
             </div>
             <div class="leave-time" style="margin-left: 126px; margin-top: 15px;"> or make an appointment:</div>
-            <select class='form-control leave-time' style="margin-top: 8px;width: 120px; left: 350px;  " id="leaving_time">
+            <select class='form-control leave-time leave-time-time' style="margin-top: 8px;width: 120px; left: 350px;  " id="leaving_time">
                 <option value="0">Now</option>
                 <option value="10">In 10 mins</option>
                 <option value="15">In 15 mins</option>
@@ -48,7 +48,7 @@
                 <option value="60">In 1 hr</option>
             </select>
             <h4 class="leave-time" style="margin-top: 50px; left:16px; width:auto;">
-                <input class="is_shared" type="checkbox" id="is_shared" onclick="joinSharedRide()" value="DRIVER">
+                <input class="is_shared" type="checkbox" id="is_shared" value="DRIVER">
                 <label for="is_shared" style="margin-left: 8px;"> Join Shared Ride</label><br>
             </h4>
             <h2 class="leave-time collapse-prompt" style="margin-top: 100px;left: 16px;">Pick Up Your Ride:</h2>
@@ -62,9 +62,9 @@
                 <h3>Economy</h3>
                 <i class="fa fa-user"></i>
                 <h5>4</h5>
-                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h6 class="estimate_time">Estimate arrives at: {% now "H:i" %} </h6>
                 <h4>Best choice for everyday rides! </h4>
-                <h2>$33.27</h2>
+                <h2 class="estimate_price">$33.27</h2>
                 <button type="submit" class="btn btn-dark go-btn" id="choice_1"> Go!</button>
             </div>
         </div>
@@ -75,9 +75,9 @@
                 <h3>Hugo Comfort©</h3>
                 <i style="margin-left:320px;" class="fa fa-user"></i>
                 <h5 style="margin-left: 338px;">4</h5>
-                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h6 class="estimate_time">Estimate arrives at: {% now "H:i" %} </h6>
                 <h4>Almost new car with clean and comfort environment! </h4>
-                <h2>$41.05</h2>
+                <h2 class="estimate_price">$41.05</h2>
                 <button type="submit" class="btn btn-dark go-btn" id="choice_2"> Go!</button>
             </div>
         </div>
@@ -92,9 +92,9 @@
                 <h3>Hugo Large©</h3>
                 <i style="margin-left:300px;" class="fa fa-user"></i>
                 <h5 style="margin-left:318px;">6</h5>
-                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h6 class="estimate_time">Estimate arrives at: {% now "H:i" %} </h6>
                 <h4>Best if you have large baggage! </h4>
-                <h2>$43.99</h2>
+                <h2 class="estimate_price">$43.99</h2>
                 <button type="submit" class="btn btn-dark go-btn" id="choice_3"> Go!</button>
             </div>
         </div>
@@ -105,9 +105,9 @@
                 <h3>Pet Care</h3>
                 <i class="fa fa-user"></i>
                 <h5>2-3</h5>
-                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h6 class="estimate_time">Estimate arrives at: {% now "H:i" %} </h6>
                 <h4>Affordable ride for you and pets! </h4>
-                <h2>$52.32</h2>
+                <h2 class="estimate_price">$52.32</h2>
                 <button type="submit" class="btn btn-dark go-btn" id="choice_4"> Go!</button>
             </div>
         </div>
@@ -122,9 +122,9 @@
                 <h3>Hugo Green©</h3>
                 <i style="margin-left:300px;" class="fa fa-user"></i>
                 <h5 style="margin-left:318px;">4</h5>
-                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h6 class="estimate_time">Estimate arrives at: {% now "H:i" %} </h6>
                 <h4>Save out planet by choosing electric vehicles! </h4>
-                <h2>$35.05</h2>
+                <h2 class="estimate_price">$35.05</h2>
                 <button type="submit" class="btn btn-dark go-btn" id="choice_5"> Go!</button>
             </div>
         </div>
@@ -135,9 +135,9 @@
                 <h3>Special Needs</h3>
                 <i style="margin-left:300px;" class="fa fa-user"></i>
                 <h5 style="margin-left:318px;">2-8</h5>
-                <h6>Estimate arrives at: {% now "H:i" %} </h6>
+                <h6 class="estimate_time">Estimate arrives at: {% now "H:i" %} </h6>
                 <h4>Tell us what else you want! Price may vary based on your needs. </h4>
-                <h2>$60.58</h2>
+                <h2 class="estimate_price">$60.58</h2>
                 <button type="submit" class="btn btn-dark go-btn" id="choice_6"> Go!</button>
             </div>
         </div>
@@ -147,18 +147,22 @@
 </div>
 <div class="container search_results">
 </div>
+<div class="user-email" style="display: none;"> {{user.get_username}}</div>
 
 <script>
     function search_submit() {
-        const collection = document.getElementsByClassName("collapse-ele");
-        for (let i = 0; i < 3; i++) {
-            collection[i].style.display = "flex";
+        departure = document.querySelector(".departure").value;
+	    destination = document.querySelector(".destination").value;
+        if(!(departure === "" || destination === "")) {
+            const collection = document.getElementsByClassName("collapse-ele");
+            for (let i = 0; i < 3; i++) {
+                collection[i].style.display = "flex";
+            }
+            document.getElementsByClassName("collapse-prompt")[0].style.display = "inline";
+            document.getElementsByClassName("main")[0].style.marginTop = "0";
+            document.getElementsByClassName("time")[0].style.minHeight = "650px";
         }
-        document.getElementsByClassName("collapse-prompt")[0].style.display = "inline";
-        document.getElementsByClassName("main")[0].style.marginTop = "0";
-        document.getElementsByClassName("time")[0].style.minHeight = "650px";
     }
-
 
 </script>
 
