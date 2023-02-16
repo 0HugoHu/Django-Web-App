@@ -32,7 +32,7 @@ user = self.model(
 ## Installation
 ### 1. Prerequisites
 Install following packages and dependencies in order:
-```console
+```bash
 sudo apt-get install gcc g++ make valgrind
 sudo apt-get install emacs screen
 sudo apt-get install postgresql
@@ -42,33 +42,33 @@ sudo pip3 install django psycopg2
 ```
 
 Test your Django version:
-```console
+```bash
 $ django-admin --version
 4.1.5
 ```
 
 You need ```Django>4.0``` for some new features in Django. Then install these libraries:
 
-```console
+```bash
 sudo apt-get install libssl-dev libxerces-c-dev libpqxx-dev
 sudo apt-get install manpages-posix-dev
 ```
 
 ### 2. Clone Project
 Git clone my repository:
-```console
+```bash
 git clone https://github.com/0HugoHu/Django-web-app.git
 ```
 
 Install all project-specific requirements:
-```console
+```bash
 cd Django-web-app/
 pip3 install -r requirements.txt
 ```
 
 ### 3. Configure Local Database
 Setup your local ```postgresql``` database:
-```console
+```bash
 sudo su - postgres
 psql
 ```
@@ -79,13 +79,13 @@ ALTER USER abc CREATEDB WITH PASSWORD '$PWD'; ## replace $PWD with your password
 --  exit postgres (by pressing Ctrl+D)
 --  exit the su'ed shell
 ```
-```console
+```bash
 createdb $nameOfDB # replace $nameOfDB with a meaningful name for your project
 ```
 
 ### 4. Configure APIs and Local Variables
 Edit project setting file:
-```console
+```bash
 cd ridesharing
 emacs settings.py # or use any editor you want
 ```
@@ -139,7 +139,7 @@ DEFAULT_FROM_EMAIL = '$EMAIL'
 ## Run the Server
 ### 1. Database Model Integrations
 Django will automatically create the new table for you based on the ```world/models.py``` file. Apply this creation by:
-```console
+```bash
 python3 manage.py makemigrations
 # or try with python3 manage.py makemigrations ridesharing
 # and python3 manage.py makemigrations world
@@ -147,7 +147,7 @@ python3 manage.py migrate
 ```
 
 🟥 If you have any problems creating the tables, you can do it manually by:
-```console
+```bash
 python3 manage.py sqlmigrate world 0001
 ```
 
@@ -174,12 +174,12 @@ SELECT * from world_user; ## see all records in world_user table
 q ## quit
 ```
 ### 2. Start Postgresql Service
-```console
+```bash
 sudo service postgresql start
 ```
 
 ### 3. Run Your Website Locally
-```console
+```bash
 python3 manage.py runserver 0:8080
 ```
 
