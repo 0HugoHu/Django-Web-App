@@ -1,7 +1,7 @@
 # Django Web-App
 Duke ECE568: Engineering Robust Server Software HW1. It can be used as a template for Django web project.
 
-This web-app lets users request, drive for, and join rides. It has three roles: Passenger, Driver, and Manager. The functionalities include:
+⛳ This web-app lets users request, drive for, and join rides. It has three roles: Passenger, Driver, and Manager. The functionalities include:
 
 - **Create Account**
 - **Login/Logout**
@@ -14,9 +14,20 @@ This web-app lets users request, drive for, and join rides. It has three roles: 
 - **Ride Searching (Driver)**
 - **Ride Searching (Sharer) (⚠Not yet implemented!)**
 
-See all Demos [here](#demo).
+**🆒 See all Demos [here](#demo).**
 
 ![](assets/img/demo%20(6).png)
+
+## Before All
+🚫 This is my first Django project, and just for learning purpose, I did not correctly use the ```Django Authentication``` feature. **I store all passwords in PLAIN TEXT.** Please fix it yourself in ```world/models.py```:
+```python
+user = self.model(
+            email=MyCustomUserManager.normalize_email(email_id),
+            ...
+            password=password,
+            ...
+        )
+```
 
 ## Installation
 ### 1. Prerequisites
@@ -135,7 +146,7 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 ```
 
-If you have any problems creating the tables, you can do it manually by:
+🟥 If you have any problems creating the tables, you can do it manually by:
 ```sh
 python3 manage.py sqlmigrate world 0001
 ```
@@ -171,6 +182,8 @@ sudo service postgresql start
 ```sh
 python3 manage.py runserver 0:8080
 ```
+
+**💠 Now enjoy this project!**
 
 ## Demo
 ### 1. Register
@@ -210,11 +223,11 @@ python3 manage.py runserver 0:8080
 
 
 ## Contribution
-**Developed by Hugo.**
+**🔱 Developed by Hugo.**
 
 Since I didn't really enroll in this course, this project is only used for self-learning. Some of this project requirements are meaningless and time-consuming for me, so I have not implemented (or just leave the interface) yet.
 
 **Due to the limited time, I did not clean up the code. I would be glad if someone can further improve this project**
 
-If you have any questions, feel free to contact me through:
+📧 If you have any questions, feel free to contact me through:
 ![](assets/img/demo%20(9).png)
