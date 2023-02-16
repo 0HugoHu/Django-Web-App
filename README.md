@@ -1,7 +1,7 @@
 # Django Web-App
-Duke ECE568: Engineering Robust Server Software HW1. It can be used as a template for Django web project.
+Duke ECE 568: Engineering Robust Server Software HW1. It can be used as a template for Django web project.
 
-⛳ This web-app lets users request, drive for, and join rides. It has three roles: Passenger, Driver, and Manager. The functionalities include:
+⛳ This web-app assembles Uber, which lets users request, drive for, and join rides. It has three roles: Passenger, Driver, and Manager. The functionalities include:
 
 - **Create Account**
 - **Login/Logout**
@@ -13,6 +13,7 @@ Duke ECE568: Engineering Robust Server Software HW1. It can be used as a templat
 - **Ride Status Viewing (Driver)**
 - **Ride Searching (Driver)**
 - **Ride Searching (Sharer) (⚠Not yet implemented!)**
+- **And some other unlist features...**
 
 **🆒 See all Demos [here](#demo).**
 
