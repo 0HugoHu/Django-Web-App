@@ -32,7 +32,7 @@ user = self.model(
 ## Installation
 ### 1. Prerequisites
 Install following packages and dependencies in order:
-```shell
+```console
 sudo apt-get install gcc g++ make valgrind
 sudo apt-get install emacs screen
 sudo apt-get install postgresql
