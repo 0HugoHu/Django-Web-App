@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!5@dg)@a=)5ptl%x*u5$6xj3m05smi^%1n_7&4^@orf9e*47do
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-34-231-136-27.compute-1.amazonaws.com', '127.0.0.1', 'localhost', '*',]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*',]
 
 # Application definition
 
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'haystack',
     'world',
     'phonenumber_field',
-    # 'accounts',
 ]
 
 MIDDLEWARE = [
@@ -87,9 +86,9 @@ WSGI_APPLICATION = 'ridesharing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'user_info',
-        'USER': 'postgres',
-        'PASSWORD': 'pwdpostgres',
+        'NAME': '$NAME',
+        'USER': '$USER',
+        'PASSWORD': '$PWD',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -154,8 +153,7 @@ LOGOUT_REDIRECT_URL = "home"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
-SENDGRID_API_KEY = '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'
-
+SENDGRID_API_KEY = ''
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'  # this is exactly the value 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
@@ -163,6 +161,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # The email you'll be sending emails from
-DEFAULT_FROM_EMAIL = 'jobs@hugohu.top'
+DEFAULT_FROM_EMAIL = '$EMAIL'
 
 LIVERELOAD_HOST = 'localhost'
