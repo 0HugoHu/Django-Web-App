@@ -32,7 +32,7 @@ user = self.model(
 ## Installation
 ### 1. Prerequisites
 Install following packages and dependencies in order:
-```sh
+```shell
 sudo apt-get install gcc g++ make valgrind
 sudo apt-get install emacs screen
 sudo apt-get install postgresql
@@ -42,7 +42,7 @@ sudo pip3 install django psycopg2
 ```
 
 Test your Django version:
-```sh
+```shell
 $ django-admin --version
 4.1.5
 ```
