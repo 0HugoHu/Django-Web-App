@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/trip.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include "navbar.html" %}
+
+<div class="container mt-5">
+    <div class="card bg-light" style="overflow-y:auto;max-height: 82vh">
+        <article class="card-body mx-auto" >
+
+            <h4 class="card-title mt-3 text-center" style="margin-top:6px !important;">Trip Details</h4>
+
+            <div class='pparent' style="margin-top:18px;">
+                <div class='pchild'>
+                    <div> Trip ID:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-sort-numeric-asc"></i> </span>
+                        </div>
+                        <input disabled class="form-control first_name" placeholder="{{ trip.id }}" type="text">
+
+                    </div>
+                </div>
+				<div class='pchild' style="margin-left: 10%;">
+                    <div> Vehicle Type:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-car"></i> </span>
+                        </div>
+                        <select class='form-control gender vehicle_type' id="vehicle_type">
+                            <option {% if trip.vehicle_type == 'Economy' %}selected{% endif %} value="Economy"> Economy </option>
+                            <option {% if trip.vehicle_type == 'Comfort' %}selected{% endif %} value="Comfort"> Hugo Comfort </option>
+                            <option {% if trip.vehicle_type == 'Large' %}selected{% endif %} value="Large"> Hugo Large </option>
+                            <option {% if trip.vehicle_type == 'Pet' %}selected{% endif %} value="Pet"> Pet Care </option>
+                            <option {% if trip.vehicle_type == 'Green' %}selected{% endif %} value="Green"> Hugo Green </option>
+                            <option {% if trip.vehicle_type == 'Special' %}selected{% endif %} value="Special"> Special Needs </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+			<div> Passenger:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input disabled class="form-control password" placeholder="{{ trip.passenger }}" type="text">
+            </div>
+
+			<div> Estimate Pickup Time:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-clock-o"></i> </span>
+                </div>
+                <input disabled class="form-control password" placeholder="{{ trip.estimate_pickup_time }}" type="text">
+            </div>
+
+            <div> Departure:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-certificate"></i> </span>
+                </div>
+                <input id="departure" class="form-control password departure" placeholder="{{ trip.begin }}" type="text">
+            </div>
+
+            <div> Destination:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-star"></i> </span>
+                </div>
+                <input id="destination" class="form-control email destination" placeholder="{{ trip.destination }}" type="text">
+            </div>
+
+			<div> Arrive Time:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-clock-o"></i> </span>
+                </div>
+                <input disabled class="form-control email" placeholder="{{ trip.arrive_time }}" type="text">
+            </div>
+
+			<div> Fee:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-credit-card"></i> </span>
+                </div>
+                <input disabled class="form-control email" placeholder="{{ trip.actual_fee }}" type="text">
+            </div>
+
+			<div class="form-group" style="margin-top: 32px;">
+                <button type="submit" class="btn btn-outline-info btn-block" id="update_submit"> Update Trip
+                </button>
+            </div>
+
+            <div class="form-group" {% if trip.driver != user.email %} style="display: none;" {% endif %} >
+                <button type="submit" class="btn btn-outline-info btn-block" id="pickup_submit"> Picked-up Passenger
+                </button>
+			</div>
+
+            <div class="form-group" {% if trip.driver != user.email %} style="display: none;" {% endif %} >
+                <button type="submit" class="btn btn-outline-info btn-block" id="complete_submit"> Completed Trip
+                </button>
+            </div>
+
+			<div class="form-group" {% if not user.email in trip.passenger and not user.email in trip.driver %} style="display: none;" {% endif %} >
+                <button type="submit" class="btn btn-outline-danger btn-block" id="cancel_submit"> Cancel Trip
+                </button>
+            </div>
+
+        </article>
+    </div>
+</div>
+<div id="trip-id" style="display: none;">{{trip.id}}</div>
+
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+{% endblock %}

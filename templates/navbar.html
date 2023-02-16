@@ -1,11 +1,13 @@
 {% block scripts %}
-<link rel="stylesheet" href="static/css/navbar.css">
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 {% endblock %}
 
 <div>
     <nav class="navbar navbar-light bg-light">
         <div class='parent'>
-            <img class='child' src="static/pics/logo.png" onclick="location.href='/'" style="max-width:150px;left:0;right:0;margin:auto;"/>
+            <img class='child' src="{% static '/pics/logo.png' %}" onclick="location.href='/'" style="max-width:150px;left:0;right:0;margin:auto;"/>
             <div class="child" style="left:16px; margin-top: -16px;">
                 <button class="btn btn-light my-2 my-sm-0" style="margin-right: 16px;" onclick="location.href='/'">Home
                 </button>

@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from datetime import datetime, timedelta
 from django.db.models import Q
+import random
 from .util import otp_generator, send_otp_email, validate_otp, validate_password
 from .models import User, Trip, Vehicle
 
@@ -28,7 +29,8 @@ def search(request):
     current_time = datetime.now()
     pickup_hour = int(request.GET["estimatePickUpTime"].split(':')[0])
     pickup_min = int(request.GET["estimatePickUpTime"].split(':')[1])
-    updated_time = current_time + timedelta(minutes=(60*pickup_hour+pickup_min - 60*current_time.hour-current_time.minute))
+    updated_time = current_time + timedelta(
+        minutes=(60 * pickup_hour + pickup_min - 60 * current_time.hour - current_time.minute))
 
     trip_model = Trip(
         begin=request.GET["departure"],
@@ -47,14 +49,17 @@ def search(request):
 def signup(request):
     return render(request, "signup.html")
 
+
 @login_required
 @csrf_exempt
 def my_ride(request):
-    result = {"ongoing": [], "completed": [], "cancelled": []}
-
-    result["ongoing"] = Trip.objects.filter(Q(status='Request') | Q(status='Order Taking') | Q(status='In Progress'))
-    result["completed"] = Trip.objects.filter(status='Completed')
-    result["cancelled"] = Trip.objects.filter(status='Cancelled')
+    result = {"ongoing": Trip.objects.filter(
+        (Q(status='Request') | Q(status='Order Taking') | Q(status='In Progress')) & (
+                Q(passenger=request.user.email) | Q(driver=request.user.email))),
+        "completed": Trip.objects.filter(
+            Q(status='Completed') & (Q(passenger=request.user.email) | Q(driver=request.user.email))),
+        "cancelled": Trip.objects.filter(
+            Q(status='Cancelled') & (Q(passenger=request.user.email) | Q(driver=request.user.email)))}
 
     return render(request, "my_ride.html", result)
 
@@ -68,13 +73,22 @@ def find_ride(request):
 @login_required
 @csrf_exempt
 def support(request):
-    return render(request, "my_ride.html")
+    return render(request, "support.html")
 
 
 @login_required
 @csrf_exempt
 def about(request):
-    return render(request, "my_ride.html")
+    return render(request, "about.html")
+
+@csrf_exempt
+def vehicle(request):
+    return render(request, "about.html")
+
+
+@csrf_exempt
+def vehicle_validate(request):
+    return render(request, "about.html")
 
 
 @csrf_exempt
@@ -234,12 +248,88 @@ def c_profile(request):
     return render(request, "profile.html")
 
 
-@login_required
-def get_country_details(request, country_name):
-    country = Trip.objects.get(name=country_name)
-    result = {"country": country}
+@csrf_exempt
+def get_trip_details(request, trip_id):
+    if not trip_id:
+        trip_id = 1
+    try:
+        trip = Trip.objects.get(id=int(trip_id))
+    except ObjectDoesNotExist:
+        trip = {}
 
-    return render(request, "country.html", result)
+    result = {"trip": trip}
+
+    return render(request, "trip.html", result)
+
+
+@csrf_exempt
+def trip_validate(request):
+    body = json.loads(request.body)
+    departure = body.get("departure", "")
+    destination = body.get("destination", "")
+    vehicle_type = body.get("vehicle_type", "")
+    trip_id = body.get("id", "")
+
+    try:
+        if departure:
+            Trip.objects.filter(id=trip_id).update(
+                departure=departure,
+            )
+
+        if destination:
+            Trip.objects.filter(id=trip_id).update(
+                destination=destination,
+            )
+
+        Trip.objects.filter(id=trip_id).update(
+            vehicle_type=vehicle_type,
+        )
+
+    except ObjectDoesNotExist:
+        result = {"success": False, "message": "Unknown error happens! Please try again!"}
+        return JsonResponse(result)
+
+    result = {"success": True, "message": "trip Updated!"}
+    return JsonResponse(result)
+
+
+@login_required
+@csrf_exempt
+def trip_cancel(request):
+    body = json.loads(request.body)
+    trip_id = body.get("id", "")
+    Trip.objects.filter(id=trip_id).update(
+        status='Cancelled',
+    )
+    result = {"success": True, "message": "Picked-up Passenger!"}
+    return JsonResponse(result)
+
+
+@login_required
+@csrf_exempt
+def trip_pickup(request):
+    body = json.loads(request.body)
+    pickup_time = body.get("pickup_time", "")
+    trip_id = body.get("id", "")
+    Trip.objects.filter(id=trip_id).update(
+        pickup_time=pickup_time,
+    )
+    result = {"success": True, "message": "Picked-up Passenger!"}
+    return JsonResponse(result)
+
+
+@login_required
+@csrf_exempt
+def trip_complete(request):
+    body = json.loads(request.body)
+    arrive_time = body.get("arrive_time", "")
+    trip_id = body.get("id", "")
+    Trip.objects.filter(id=trip_id).update(
+        arrive_time=arrive_time,
+        actual_fee=Trip.objects.get(id=trip_id).estimate_fee + round(random.random() * 10 - 5, 2)
+    )
+    result = {"success": True, "message": "Completed Trip!"}
+    return JsonResponse(result)
 
 
 @csrf_exempt

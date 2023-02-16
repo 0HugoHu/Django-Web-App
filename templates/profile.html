@@ -10,7 +10,7 @@
 {% block body %}
 {% include "navbar.html" %}
 <div class="container mt-5">
-    <div class="card bg-light">
+    <div class="card bg-light" style="overflow-y:auto;max-height: 82vh">
         <article class="card-body mx-auto">
 
             <h4 class="card-title mt-3 text-center" style="margin-top:6px !important;">My Profile</h4>
@@ -118,8 +118,8 @@
             <h6> ** Email address cannot be changed once registered.</h6>
             <h6> *** You cannot quit Hugo Ride© Driver Program once enrolled.</h6>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-outline-success btn-block" id="update_submit"> Apply Changes
+            <div class="form-group" style="margin-top: 16px;">
+                <button type="submit" class="btn btn-outline-info btn-block" id="update_submit"> Apply Changes
                 </button>
             </div>
 

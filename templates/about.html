@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{{ block.super }}
+<!--<script src="{% static 'js/home.js' %}"></script>-->
+{% endblock %}
+
+{% block body %}
+{% include "navbar.html" %}
+<div class="container mt-5">
+    <div class="card bg-light" style="margin-top: 20vh; max-width: 60%; margin-left: 20%">
+        <article class="card-body mx-auto" style="margin-left: 16px !important; margin-right: 0 !important;">
+            <h4 style="margin-top: 16px;">Developed by: Hugo Hu</h4>
+            <h4 style="margin-top: 16px;">Follow me on GitHub:</h4>
+            <div class="form-group input-group" style="margin-top: 16px;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-github"></i> </span>
+                </div>
+                <a href="https://github.com/0HugoHu/Django-web-app" disabled id="email" class="form-control email" placeholder="https://github.com/0HugoHu/Django-web-app">https://github.com/0HugoHu/Django-web-app</a>
+            </div>
+        </article>
+
+    </div>
+
+</div>
+
+<script>
+
+
+</script>
+
+{% endblock %}

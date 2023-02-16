@@ -1,0 +1,11 @@
+h4 {
+    color: floralwhite;
+}
+
+.car-type {
+    height: 120px;
+    width: 120px;
+    position: absolute;
+    right: 16px;
+    bottom: -16px;
+}

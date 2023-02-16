@@ -4,7 +4,7 @@
 {% block scripts %}
 {{ block.super }}
 <!--<script src="{% static 'js/home.js' %}"></script>-->
-<!--<link rel="stylesheet" href="{% static 'css/home.css' %}">-->
+<link rel="stylesheet" href="{% static 'css/my_ride.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -14,67 +14,72 @@
 
 </div>
 <div class="container search_results">
+    {% if ongoing %}
     <h4> Ongoing </h4>
-    {% if not countries %}
-    <p class="text-center"> no countries matched! </p>
     {% endif %}
     <div class="row">
         {% for i in ongoing %}
         <div class="col-sm-4 mb-5">
-            <div class="card" style="width: 18rem;">
+            <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title"> {{ i.begin }} </h5>
-                    <p class="card-text">Local name: {{ i.destination }}
-                        <br> Surface area: {{ i.id }}
+                    <h6 class="card-title" {% if i.status == 'Request' %} style="color:#E57373;" {% elif i.status == 'Order Taking' %} style="color:#42A5F5;"  {% elif i.status == 'In Progress' %} style="color:#26A69A;"  {% elif i.status == 'Completed' %} style="color:#78909C;" {% else %} style="color:#BDBDBD;" {% endif %}> {{ i.status }} </h6>
+                    <h5 class="card-title"> {{ i.begin }} → </h5>
+                    <h5 class="card-title"> {{ i.destination }} </h5>
+                    <p class="card-text">Request Time: {{ i.request_time }}
+                        <br> Estimate Fee: ${{ i.estimate_fee }}
                     </p>
-                    <a href="/country/{{ i.name }}" class="btn btn-outline-success">Know more</a>
+                    <a href="/trip/{{ i.id }}" class="btn btn-outline-dark">View more</a>
+                    <img class="car-type" {% if i.vehicle_type == 'Economy' %} src="/static/pics/car_basic.png" {% elif i.vehicle_type == 'Comfort' %} src="/static/pics/car_comfort.png" {% elif i.vehicle_type == 'Large' %} src="/static/pics/car_xl.png" {% elif i.vehicle_type == 'Pet' %} src="/static/pics/car_pet.png" {% elif i.vehicle_type == 'Green' %} src="/static/pics/car_green.png" {% else %} src="/static/pics/car_access.png" {% endif %} />
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 
+    {% if completed %}
     <h4> Completed </h4>
-    {% if not cities %}
-    <p class="text-center"> no cities matched! </p>
     {% endif %}
     <div class="row">
-        {% for i in cities %}
+        {% for i in completed %}
         <div class="col-sm-4 mb-5">
-            <div class="card" style="width: 18rem;">
+            <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title"> {{ i.name }} </h5>
-                    <p class="card-text">Country code: {{ i.countrycode_id }}
-                        <br> District: {{ i.district }}
-                        <br> Population: {{ i.population }}
+                    <h6 class="card-title" {% if i.status == 'Request' %} style="color:#E57373;" {% elif i.status == 'Order Taking' %} style="color:#42A5F5;"  {% elif i.status == 'In Progress' %} style="color:#26A69A;"  {% elif i.status == 'Completed' %} style="color:#78909C;" {% else %} style="color:#BDBDBD;" {% endif %}> {{ i.status }} </h6>
+                    <h5 class="card-title"> {{ i.begin }} → </h5>
+                    <h5 class="card-title"> {{ i.destination }} </h5>
+                    <p class="card-text">Request Time: {{ i.request_time }}
+                        <br> Estimate Fee: ${{ i.estimate_fee }}
                     </p>
+                    <a href="/trip/{{ i.id }}" class="btn btn-outline-dark">View more</a>
+                    <img class="car-type" {% if i.vehicle_type == 'Economy' %} src="/static/pics/car_basic.png" {% elif i.vehicle_type == 'Comfort' %} src="/static/pics/car_comfort.png" {% elif i.vehicle_type == 'Large' %} src="/static/pics/car_xl.png" {% elif i.vehicle_type == 'Pet' %} src="/static/pics/car_pet.png" {% elif i.vehicle_type == 'Green' %} src="/static/pics/car_green.png" {% else %} src="/static/pics/car_access.png" {% endif %} />
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <h4> Cancelledop </h4>
-    {% if not languages %}
-    <p class="text-center"> No languages matched! </p>
+    {% if cancelled %}
+    <h4> Cancelled </h4>
     {% endif %}
     <div class="row">
-        {% for i in languages %}
+        {% for i in cancelled %}
         <div class="col-sm-4 mb-5">
-            <div class="card" style="width: 18rem;">
+            <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title"> {{ i.language }} </h5>
-                    <p class="card-text">Country code: {{ i.countrycode_id }}
-                        <br> Percentage: {{ i.percentage }}
-                        <br> IsOfficial: {{ i.isofficial }}
+                    <h6 class="card-title" {% if i.status == 'Request' %} style="color:#E57373;" {% elif i.status == 'Order Taking' %} style="color:#42A5F5;"  {% elif i.status == 'In Progress' %} style="color:#26A69A;"  {% elif i.status == 'Completed' %} style="color:#78909C;" {% else %} style="color:#BDBDBD;" {% endif %}> {{ i.status }} </h6>
+                    <h5 class="card-title"> {{ i.begin }} → </h5>
+                    <h5 class="card-title"> {{ i.destination }} </h5>
+                    <p class="card-text">Request Time: {{ i.request_time }}
+                        <br> Estimate Fee: ${{ i.estimate_fee }}
                     </p>
+                    <a href="/trip/{{ i.id }}" class="btn btn-outline-dark">View more</a>
+                    <img class="car-type" {% if i.vehicle_type == 'Economy' %} src="/static/pics/car_basic.png" {% elif i.vehicle_type == 'Comfort' %} src="/static/pics/car_comfort.png" {% elif i.vehicle_type == 'Large' %} src="/static/pics/car_xl.png" {% elif i.vehicle_type == 'Pet' %} src="/static/pics/car_pet.png" {% elif i.vehicle_type == 'Green' %} src="/static/pics/car_green.png" {% else %} src="/static/pics/car_access.png" {% endif %} />
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
-<div class="user-email" style="display: none;"> {{user.get_username}}</div>
 
 <script>
 
