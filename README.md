@@ -58,7 +58,7 @@ sudo apt-get install manpages-posix-dev
 ### 2. Clone Project
 Git clone my repository:
 ```bash
-git clone https://github.com/0HugoHu/Django-web-app.git
+git clone https://github.com/0HugoHu/Django-Web-App.git
 ```
 
 Install all project-specific requirements:
