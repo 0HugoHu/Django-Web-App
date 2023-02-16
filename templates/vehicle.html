@@ -1,10 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
 
-</body>
-</html>
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/vehicle.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include "navbar.html" %}
+
+<div class="container mt-5">
+    <div class="card bg-light" style="overflow-y:auto;max-height: 82vh">
+        <article class="card-body mx-auto" >
+
+            <h4 class="card-title mt-3 text-center" style="margin-top:6px !important;">Vehicle Info</h4>
+
+            <div class='pparent' style="margin-top:18px;">
+                <div class='pchild'>
+                    <div> Brand:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-meetup"></i> </span>
+                        </div>
+                        <input class="form-control brand" placeholder="{{ vehicle.brand }}" type="text">
+                    </div>
+                </div>
+				<div class='pchild' style="margin-left: 10%;">
+                    <div> Model:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-truck"></i> </span>
+                        </div>
+                        <input class="form-control model" placeholder="{{ vehicle.model }}" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class='pparent' style="margin-top:18px;">
+                <div class='pchild'>
+                    <div> Vehicle Type:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-car"></i> </span>
+                        </div>
+                        <select class='form-control gender vehicle_type' id="vehicle_type">
+                            <option {% if vehicle.vehicle_type == 'Economy' %}selected{% endif %} value="Economy"> Economy </option>
+                            <option {% if vehicle.vehicle_type == 'Comfort' %}selected{% endif %} value="Comfort"> Comfort </option>
+                            <option {% if vehicle.vehicle_type == 'Large' %}selected{% endif %} value="Large"> Large </option>
+                            <option {% if vehicle.vehicle_type == 'Pet' %}selected{% endif %} value="Pet"> Pet </option>
+                            <option {% if vehicle.vehicle_type == 'Green' %}selected{% endif %} value="Green"> Electrical </option>
+                            <option {% if vehicle.vehicle_type == 'Special' %}selected{% endif %} value="Special"> Special Needs </option>
+                        </select>
+                    </div>
+                </div>
+				<div class='pchild' style="margin-left: 10%;">
+                    <div> Capacity:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-sort-numeric-asc"></i> </span>
+                        </div>
+                        <input class="form-control capacity" placeholder="{{ vehicle.capacity }}" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class='pparent' style="margin-top:18px;">
+                <div class='pchild'>
+                    <div> Year:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-search"></i> </span>
+                        </div>
+                        <input class="form-control year" placeholder="{{ vehicle.year }}" type="text">
+                    </div>
+                </div>
+				<div class='pchild' style="margin-left: 10%;">
+                    <div> Color:</div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-diamond"></i> </span>
+                        </div>
+                        <input class="form-control color" placeholder="{{ vehicle.color }}" type="text">
+                    </div>
+                </div>
+            </div>
+            
+            <img class="car-type" {% if vehicle.vehicle_type == 'Economy' %} src="/static/pics/car_basic.png" {% elif vehicle.vehicle_type == 'Comfort' %} src="/static/pics/car_comfort.png" {% elif vehicle.vehicle_type == 'Large' %} src="/static/pics/car_xl.png" {% elif vehicle.vehicle_type == 'Pet' %} src="/static/pics/car_pet.png" {% elif vehicle.vehicle_type == 'Green' %} src="/static/pics/car_green.png" {% else %} src="/static/pics/car_access.png" {% endif %} />
+                
+
+			<div class="form-group" style="margin-top: 32px;">
+                <button type="submit" class="btn btn-outline-info btn-block" id="update_submit"> Update Vehicle Info
+                </button>
+            </div>
+
+
+        </article>
+    </div>
+</div>
+<div id="plate-number" style="display: none;">{{vehicle.plate_number}}</div>
+
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+{% endblock %}

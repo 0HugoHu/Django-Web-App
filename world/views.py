@@ -10,7 +10,7 @@ from django.db import IntegrityError
 from datetime import datetime, timedelta
 from django.db.models import Q
 import random
-from .util import otp_generator, send_otp_email, validate_otp, validate_password
+from .util import otp_generator, send_otp_email, validate_otp, validate_password, send_confirmation_email
 from .models import User, Trip, Vehicle
 
 
@@ -67,7 +67,13 @@ def my_ride(request):
 @login_required
 @csrf_exempt
 def find_ride(request):
-    return render(request, "my_ride.html")
+    try:
+        user_vehicle = Vehicle.objects.get(plate_number=request.user.plate_number)
+    except ObjectDoesNotExist:
+        user_vehicle = {}
+    result = dict(ongoing=Trip.objects.filter(Q(status='Request') & Q(vehicle_type=user_vehicle.vehicle_type)),
+                  all=Trip.objects.filter(status='Request'))
+    return render(request, "find_ride.html", result)
 
 
 @login_required
@@ -83,12 +89,59 @@ def about(request):
 
 @csrf_exempt
 def vehicle(request):
-    return render(request, "about.html")
+    try:
+        vehicle = Vehicle.objects.get(plate_number=request.user.plate_number)
+    except ObjectDoesNotExist:
+        vehicle = {}
+
+    result = {"vehicle": vehicle}
+
+    return render(request, "vehicle.html", result)
 
 
 @csrf_exempt
 def vehicle_validate(request):
-    return render(request, "about.html")
+    body = json.loads(request.body)
+    brand = body.get("brand", "")
+    model = body.get("model", "")
+    vehicle_type = body.get("vehicle_type", "")
+    capacity = body.get("capacity", "")
+    year = body.get("year", "FEMALE")
+    color = body.get("color", "")
+    plate_number = body.get("plate_number", "")
+
+    try:
+        if brand:
+            Vehicle.objects.filter(plate_number=plate_number).update(
+                brand=brand,
+            )
+        if model:
+            Vehicle.objects.filter(plate_number=plate_number).update(
+                model=model,
+            )
+        if vehicle_type:
+            Vehicle.objects.filter(plate_number=plate_number).update(
+                vehicle_type=vehicle_type,
+            )
+        if capacity:
+            Vehicle.objects.filter(plate_number=plate_number).update(
+                capacity=capacity,
+            )
+        if year:
+            Vehicle.objects.filter(plate_number=plate_number).update(
+                year=year,
+            )
+        if color:
+            Vehicle.objects.filter(plate_number=plate_number).update(
+                color=color,
+            )
+    except ObjectDoesNotExist:
+        result = {"success": False, "message": "Unknown error happens! Please try again!"}
+        return JsonResponse(result)
+
+    result = {"success": True, "message": "Vehicle Info Updated!"}
+    return JsonResponse(result)
+
 
 
 @csrf_exempt
@@ -254,11 +307,37 @@ def get_trip_details(request, trip_id):
         trip_id = 1
     try:
         trip = Trip.objects.get(id=int(trip_id))
+        if trip.driver:
+            driver = User.objects.get(email=trip.driver)
+        else:
+            driver = {}
     except ObjectDoesNotExist:
         trip = {}
+        driver = {}
 
-    result = {"trip": trip}
+    result = {"trip": trip, "driver": driver}
 
+    return render(request, "trip.html", result)
+
+
+@csrf_exempt
+def confirm_details(request, trip_id):
+    if not trip_id:
+        trip_id = 1
+    try:
+        trip = Trip.objects.get(id=int(trip_id))
+        driver = User.objects.get(email=request.user.email)
+        Trip.objects.filter(id=int(trip_id)).update(
+            driver=request.user.email,
+            status="Order Taking",
+        )
+    except ObjectDoesNotExist:
+        trip = {}
+        driver = {}
+
+    send_confirmation_email(trip.passenger, request.user.username)
+
+    result = {"trip": trip, "driver": driver}
     return render(request, "trip.html", result)
 
 
@@ -313,6 +392,7 @@ def trip_pickup(request):
     trip_id = body.get("id", "")
     Trip.objects.filter(id=trip_id).update(
         pickup_time=pickup_time,
+        status="In Progress",
     )
     result = {"success": True, "message": "Picked-up Passenger!"}
     return JsonResponse(result)
@@ -326,7 +406,8 @@ def trip_complete(request):
     trip_id = body.get("id", "")
     Trip.objects.filter(id=trip_id).update(
         arrive_time=arrive_time,
-        actual_fee=Trip.objects.get(id=trip_id).estimate_fee + round(random.random() * 10 - 5, 2)
+        status="Completed",
+        actual_fee=Trip.objects.get(id=trip_id).estimate_fee + str(round(random.random() * 10 - 5, 2))
     )
     result = {"success": True, "message": "Completed Trip!"}
     return JsonResponse(result)

@@ -67,7 +67,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-certificate"></i> </span>
                 </div>
-                <input id="departure" class="form-control password departure" placeholder="{{ trip.begin }}" type="text">
+                <input {% if trip.status != 'Request' %} disabled {% endif %} id="departure" class="form-control password departure" placeholder="{{ trip.begin }}" type="text">
             </div>
 
             <div> Destination:</div>
@@ -75,7 +75,23 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-star"></i> </span>
                 </div>
-                <input id="destination" class="form-control email destination" placeholder="{{ trip.destination }}" type="text">
+                <input {% if trip.status != 'Request' %} disabled {% endif %} id="destination" class="form-control email destination" placeholder="{{ trip.destination }}" type="text">
+            </div>
+
+            <div> Driver:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-male"></i> </span>
+                </div>
+                <input disabled class="form-control driver" placeholder="{{ driver.username }}" type="text">
+            </div>
+
+            <div> Plate Number:</div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-car"></i> </span>
+                </div>
+                <input disabled class="form-control driver" placeholder="{{ driver.plate_number }}" type="text">
             </div>
 
 			<div> Arrive Time:</div>
@@ -95,22 +111,22 @@
             </div>
 
 			<div class="form-group" style="margin-top: 32px;">
-                <button type="submit" class="btn btn-outline-info btn-block" id="update_submit"> Update Trip
+                <button {% if trip.status != 'Request' %} disabled {% endif %} type="submit" class="btn btn-outline-info btn-block" id="update_submit"> Update Trip
                 </button>
             </div>
 
             <div class="form-group" {% if trip.driver != user.email %} style="display: none;" {% endif %} >
-                <button type="submit" class="btn btn-outline-info btn-block" id="pickup_submit"> Picked-up Passenger
+                <button {% if trip.status != 'Order Taking' %} disabled {% endif %} type="submit" class="btn btn-outline-info btn-block" id="pickup_submit"> Picked-up Passenger
                 </button>
 			</div>
 
             <div class="form-group" {% if trip.driver != user.email %} style="display: none;" {% endif %} >
-                <button type="submit" class="btn btn-outline-info btn-block" id="complete_submit"> Completed Trip
+                <button {% if trip.status != 'In Progress' %} disabled {% endif %} type="submit" class="btn btn-outline-info btn-block" id="complete_submit"> Completed Trip
                 </button>
             </div>
 
 			<div class="form-group" {% if not user.email in trip.passenger and not user.email in trip.driver %} style="display: none;" {% endif %} >
-                <button type="submit" class="btn btn-outline-danger btn-block" id="cancel_submit"> Cancel Trip
+                <button {% if trip.status != 'Request' %} disabled {% endif %} type="submit" class="btn btn-outline-danger btn-block" id="cancel_submit"> Cancel Trip
                 </button>
             </div>
 

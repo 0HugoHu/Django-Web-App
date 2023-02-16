@@ -39,7 +39,7 @@ $DOM.on('click', '#choice_1', function() {
 	console.log("trip requested");
 	$.ajax({
 		type: 'get',
-		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=' + 1,
+		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=Economy',
 		success: function(result) {
             console.log(result);
             if (result.success) {
@@ -66,7 +66,7 @@ $DOM.on('click', '#choice_2', function() {
 	console.log("trip requested");
 	$.ajax({
 		type: 'get',
-		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=' + 2,
+		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=Comfort',
 		success: function(result) {
             console.log(result);
             if (result.success) {
@@ -93,7 +93,7 @@ $DOM.on('click', '#choice_3', function() {
 	console.log("trip requested");
 	$.ajax({
 		type: 'get',
-		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=' + 3,
+		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=Large',
 		success: function(result) {
             console.log(result);
             if (result.success) {
@@ -120,7 +120,7 @@ $DOM.on('click', '#choice_4', function() {
 	console.log("trip requested");
 	$.ajax({
 		type: 'get',
-		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=' + 4,
+		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=Pet',
 		success: function(result) {
             console.log(result);
             if (result.success) {
@@ -147,7 +147,7 @@ $DOM.on('click', '#choice_5', function() {
 	console.log("trip requested");
 	$.ajax({
 		type: 'get',
-		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=' + 5,
+		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=Green',
 		success: function(result) {
             console.log(result);
             if (result.success) {
@@ -174,7 +174,7 @@ $DOM.on('click', '#choice_6', function() {
 	console.log("trip requested");
 	$.ajax({
 		type: 'get',
-		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=' + 6,
+		url: '/search?email=' + email + '&departure=' + departure + '&destination=' + destination + '&joinShared=' + joinShared + '&estimatePickUpTime=' + estimatePickUpTime + '&estimateFee=' + estimateFee + '&choice=Special',
 		success: function(result) {
             console.log(result);
             if (result.success) {

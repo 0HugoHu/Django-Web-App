@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{{ block.super }}
+<!--<script src="{% static 'js/home.js' %}"></script>-->
+<link rel="stylesheet" href="{% static 'css/my_ride.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include "navbar.html" %}
+<div class="container mt-5">
+
+
+</div>
+<div class="container search_results">
+    <h5 class="leave-time" style="margin-top: 50px; left:16px; width:auto; color: floralwhite">
+        <input class="is_shared" type="checkbox" id="show_all" onclick="showAllResults()" value="DRIVER">
+        <label for="show_all" style="margin-left: 8px;"> Show all results</label><br>
+    </h5>
+    {% if ongoing %}
+    <h4> Ongoing </h4>
+    {% endif %}
+    <div class="row" id="row_ongoing">
+        {% for i in ongoing %}
+        <div class="col-sm-4 mb-5">
+            <div class="card" >
+                <div class="card-body">
+                    <h6 class="card-title" {% if i.status == 'Request' %} style="color:#E57373;" {% elif i.status == 'Order Taking' %} style="color:#42A5F5;"  {% elif i.status == 'In Progress' %} style="color:#26A69A;"  {% elif i.status == 'Completed' %} style="color:#78909C;" {% else %} style="color:#BDBDBD;" {% endif %}> {{ i.status }} </h6>
+                    <h5 class="card-title"> {{ i.begin }} → </h5>
+                    <h5 class="card-title"> {{ i.destination }} </h5>
+                    <p class="card-text">Request Time: {{ i.request_time }}
+                        <br> Estimate Fee: ${{ i.estimate_fee }}
+                    </p>
+                    <a href="/take_ride/{{ i.id }}" class="btn btn-outline-dark">Take Ride!</a>
+                    <img class="car-type" {% if i.vehicle_type == 'Economy' %} src="/static/pics/car_basic.png" {% elif i.vehicle_type == 'Comfort' %} src="/static/pics/car_comfort.png" {% elif i.vehicle_type == 'Large' %} src="/static/pics/car_xl.png" {% elif i.vehicle_type == 'Pet' %} src="/static/pics/car_pet.png" {% elif i.vehicle_type == 'Green' %} src="/static/pics/car_green.png" {% else %} src="/static/pics/car_access.png" {% endif %} />
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row" id="row_all" style="display: none">
+        {% for i in all %}
+        <div class="col-sm-4 mb-5">
+            <div class="card" >
+                <div class="card-body">
+                    <h6 class="card-title" {% if i.status == 'Request' %} style="color:#E57373;" {% elif i.status == 'Order Taking' %} style="color:#42A5F5;"  {% elif i.status == 'In Progress' %} style="color:#26A69A;"  {% elif i.status == 'Completed' %} style="color:#78909C;" {% else %} style="color:#BDBDBD;" {% endif %}> {{ i.status }} </h6>
+                    <h5 class="card-title"> {{ i.begin }} → </h5>
+                    <h5 class="card-title"> {{ i.destination }} </h5>
+                    <p class="card-text">Request Time: {{ i.request_time }}
+                        <br> Estimate Fee: ${{ i.estimate_fee }}
+                    </p>
+                    <a href="/take_ride/{{ i.id }}" class="btn btn-outline-dark">Take Ride!</a>
+                    <img class="car-type" {% if i.vehicle_type == 'Economy' %} src="/static/pics/car_basic.png" {% elif i.vehicle_type == 'Comfort' %} src="/static/pics/car_comfort.png" {% elif i.vehicle_type == 'Large' %} src="/static/pics/car_xl.png" {% elif i.vehicle_type == 'Pet' %} src="/static/pics/car_pet.png" {% elif i.vehicle_type == 'Green' %} src="/static/pics/car_green.png" {% else %} src="/static/pics/car_access.png" {% endif %} />
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+     function showAllResults() {
+        var checkBox = document.getElementById("show_all");
+        var widget1 = document.getElementById("row_ongoing");
+        var widget2 = document.getElementById("row_all");
+        if (checkBox.checked === true) {
+            widget1.style.display = "none";
+            widget2.style.display = "";
+        } else {
+            widget1.style.display = "";
+            widget2.style.display = "none";
+        }
+     }
+
+</script>
+
+{% endblock %}

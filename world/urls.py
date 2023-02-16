@@ -15,6 +15,7 @@ urlpatterns = [
     re_path(r"^trip/cancel", views.trip_cancel, name="trip_cancel"),
     re_path(r"^trip/pickup", views.trip_pickup, name="trip_pickup"),
     re_path(r"^trip/complete", views.trip_complete, name="trip_complete"),
+    re_path(r'take_ride/(?P<trip_id>[0-9]+)', views.confirm_details, name="confirm_details"),
     re_path(r'trip/(?P<trip_id>[0-9]+)', views.get_trip_details, name="get_trip_details"),
     re_path(r'^logout$', views.c_logout, name="logout"),
     re_path(r'^my_ride', views.my_ride, name="my_ride"),

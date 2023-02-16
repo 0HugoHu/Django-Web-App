@@ -20,6 +20,18 @@ def send_otp_email(email, otp):
     return True
 
 
+def send_confirmation_email(email, driver):
+    try:
+        message = "Hi!\n\nYour ride has been confirmed by a driver: %s\n\nEnjoy your safe and convenient ride!\n\nBest,\nHugo Ride Registration Team" % (
+            driver)
+        email = EmailMessage('Hugo Ride: Trip Confirmed', message, to=[email])
+        email.send()
+    except Exception:
+        return False
+
+    return True
+
+
 def validate_otp(otp, sent_otp, email, sent_email):
     if not sent_otp or not sent_email:
         result = {"success": False, "message": "Session has expired! Please request again!"}
