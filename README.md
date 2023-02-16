@@ -171,7 +171,7 @@ Copy and execute this schema in ```psql```, and you can check your database by (
 \l ## to list all databases
 \c user_info ## switch to your database
 \dt ## show all tables
-SELECT * from world_user; ## see all records in world_user table
+SELECT * FROM world_user; ## see all records in world_user table
 q ## quit
 ```
 ### 2. Start Postgresql Service
