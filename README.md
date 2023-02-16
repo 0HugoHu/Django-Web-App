@@ -73,7 +73,7 @@ sudo su - postgres
 psql
 ```
 Create a user, for convenience, I suggest you to choose the name of your linux logged-in username (e.g., ```abc@dce:~$```: then choose ```abc``` as your name):
-```postgresql
+```sql
 CREATE abc;
 ALTER USER abc CREATEDB WITH PASSWORD '$PWD'; ## replace $PWD with your password
 --  exit postgres (by pressing Ctrl+D)
