@@ -228,7 +228,7 @@ python3 manage.py runserver 0:8080
 
 Since I didn't really enroll in this course, this project is only used for self-learning. Some of this project requirements are meaningless and time-consuming for me, so I have not implemented (or just leave the interface) yet.
 
-**Due to the limited time, I did not clean up the code. I would be glad if someone can further improve this project**
+**Due to the limited time, I did not clean up and refractor the code. I would be glad if someone can further improve this project.**
 
 📧 If you have any questions, feel free to contact me through:
 ![](assets/img/demo%20(9).png)
