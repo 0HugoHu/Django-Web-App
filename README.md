@@ -53,6 +53,7 @@ You need ```Django>4.0``` for some new features in Django. Then install these li
 ```bash
 sudo apt-get install libssl-dev libxerces-c-dev libpqxx-dev
 sudo apt-get install manpages-posix-dev
+pip3 install django-livereload
 ```
 
 ### 2. Clone Project
@@ -75,7 +76,7 @@ psql
 ```
 Create a user, for convenience, I suggest you to choose the name of your linux logged-in username (e.g., ```abc@dce:~$```: then choose ```abc``` as your name):
 ```sql
-CREATE abc;
+CREATE USER abc;
 ALTER USER abc CREATEDB WITH PASSWORD '$PWD'; ## replace $PWD with your password
 --  exit postgres (by pressing Ctrl+D)
 --  exit the su'ed shell
