@@ -1,6 +1,8 @@
 # Django Web-App
 Duke ECE 568: Engineering Robust Server Software HW1. It can be used as a template for Django web project.
 
+**Note: Looking back a year later, the front-end code was scribbled to death, meaningless copy and paste rather than extracting shared components. Therefore this project is for UI presentation only.**
+
 ⛳ This web-app assembles Uber, which lets users request, drive for, and join rides. It has three roles: Passenger, Driver, and Manager. The functionalities include:
 
 - **Create Account**
